@@ -22,7 +22,7 @@ def submit_data(influxdb_ip, database, data):
 		# Loop through data
 		for parking in data:
 				payload.append(
-						"{measurement},city='{city}',name='{name}',description='{description}',latitude='{latitude}',longitude='{longitude}' " \
+						"{measurement},city={city},name={name},description={description},latitude={latitude},longitude={longitude} " \
 						"max_capacity={max_capacity},current_capacity={current_capacity},open={is_open} {timestamp}" \
 						.format(
 							measurement="state",
