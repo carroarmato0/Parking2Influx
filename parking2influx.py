@@ -17,13 +17,11 @@ def submit_data(influxdb_ip, database, data):
 
 		payload = []
 
-		timestamp = int(time.time())
-
 		# Loop through data
 		for parking in data:
 				payload.append(
 						"{measurement},city={city},name={name},description={description},latitude={latitude},longitude={longitude} " \
-						"max_capacity={max_capacity},current_capacity={current_capacity},open={is_open} {timestamp}" \
+						"max_capacity={max_capacity},current_capacity={current_capacity},open={is_open}" \
 						.format(
 							measurement="state",
 							city=parking["city"]["name"],
@@ -33,8 +31,7 @@ def submit_data(influxdb_ip, database, data):
 							longitude=parking["longitude"],
 							max_capacity=parking["parkingStatus"]["totalCapacity"],
 							current_capacity=parking["parkingStatus"]["availableCapacity"],
-							is_open=int(parking["parkingStatus"]["open"] == True),
-							timestamp=timestamp))
+							is_open=int(parking["parkingStatus"]["open"] == True)))
 
 		client.write_points(payload, batch_size=len(payload), protocol='line')
 
